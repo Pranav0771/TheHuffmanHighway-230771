@@ -1,0 +1,9 @@
+*QUESTION1*
+arr[i] means *(arr+i); where arr points to the first element of array.
+similarly, i[arr] means *(i+arr).. since, *(arr+i) and *(i+arr) are same so there will be no error and all the elemnts of the array will be printed.
+
+*QUESTION2*
+Because cout operator "<<" is overloaded for char* and void*.
+So for int array it is converted to void* and passed for the output which only gives the address of the first element.
+While for character array it is converted to char* (dominates void* unless explicitly casted) and the operator treats it as string and prints whole character array.
+If you want the address, try casting the character array as a void pointer.
