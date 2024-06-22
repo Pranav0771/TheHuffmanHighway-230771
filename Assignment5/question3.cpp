@@ -37,8 +37,58 @@ TreeNode* buildTree(vector<int>& nums) {
     return root;
 }
 
+bool Path(TreeNode* root, int n, vector<TreeNode*>& path) {
+    if (!root)
+    return false;
+
+    path.push_back(root);
+
+    if (root->val == n)
+    return true;
+
+    if ((root->left && Path(root->left, n, path)) || (root->right && Path(root->right, n, path))){
+        return true;
+    }
+    path.pop_back();
+    return false;
+}
+
+TreeNode* commonParent(TreeNode* root, int n1, int n2) {
+    vector<TreeNode*> path1, path2;
+
+    if (!Path(root, n1, path1) || !Path(root, n2, path2)) return NULL;
+
+    int i;
+    for (i = 0; i < path1.size() && i < path2.size(); i++){
+        if (path1[i] != path2[i]) break;
+    }
+    
+    return path1[i-1];
+}
+
 void getPath(TreeNode* root, int start, int end, vector<int>& path) {
-      
+    vector<TreeNode*> path1, path2;
+
+    Path(root, start, path1);
+    Path(root, end, path2);
+
+    TreeNode* cp = commonParent(root, start, end);  
+
+    reverse(path1.begin(), path1.end());
+    int i = 0;
+    while (path1[i] != cp) {
+        path.push_back(path1[i]->val);
+        i++;
+    }
+
+    path.push_back(cp->val);
+
+    reverse(path2.begin(), path2.end());
+    i = 0;
+    while (path2[i] != cp) {
+        path.push_back(path2[i]->val);
+        i++;
+    }
 }
 
 void evaluate(TreeNode* root, const vector<pair<int, int>>& queries){
