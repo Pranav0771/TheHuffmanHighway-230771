@@ -1,6 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <string>
+#include <algorithm>
 using namespace std;
 
 struct TreeNode {
@@ -35,8 +37,27 @@ TreeNode* buildTree(vector<int>& nums) {
     return root;
 }
 
+void getPath(TreeNode* root, int start, int end, vector<int>& path) {
+      
+}
+
 void evaluate(TreeNode* root, const vector<pair<int, int>>& queries){
-    
+      for (const auto& query : queries) {
+        vector<int> path;
+        getPath(root, query.first, query.second, path);
+        int sum = 0;
+        int maxVal = INT_MIN;
+        int minVal = INT_MAX;
+        for (int val : path){
+            sum += val;
+            maxVal = max(maxVal, val);
+            minVal = min(minVal, val);
+        }
+        cout << "Query (" << query.first << ", " << query.second << "):" << endl;
+        cout << "Sum: " << sum << endl;
+        cout << "Max: " << maxVal << endl;
+        cout << "Min: " << minVal << endl;
+    }
 }
 
 int main(){
